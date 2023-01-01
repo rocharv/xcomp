@@ -50,9 +50,9 @@ def read_arguments():
         "-r",
         "--recursive",
         action="store_true",
-        help="compare recursively every file belonging to each path provided" +
-             "(and its subdirectories) with each other. " +
-             "Both paths must be directories"
+        help=("compare recursively every file belonging to each path provided"
+              "(and its subdirectories) with each other. "
+              "Both paths must be directories")
     )
 
     arg_parser.add_argument(
@@ -89,7 +89,7 @@ def load_hash_cache(args) -> dict[str, str]:
     return hash_cache
 
 
-def get_hash_dict(directory_path: Path, args) -> dict[str, list[str]]:
+def get_hash_dict(directory_path: str, args) -> dict[str, list[str]]:
     result_dict: dict[str, list[str]] = {}
     hash_cache: dict[str, str] = {}
 
@@ -187,9 +187,9 @@ def main(args=None) -> None:
 
     elif (not path.exists(args.path1) or not path.exists(args.path2)):
         if not path.exists(args.path1):
-            print(f"xcomp: the path {args.path1} doesn't exist")
+            print(f"xcomp: the path '{args.path1}' doesn't exist")
         if not path.exists(args.path2):
-            print(f"xcomp: the path {args.path2} doesn't exist")
+            print(f"xcomp: the path '{args.path2}' doesn't exist")
         raise SystemExit(1)
 
     elif path.isfile(args.path1) and path.isdir(args.path2):

@@ -54,7 +54,7 @@ class Tests(unittest.TestCase):
                 "xcomp/fixtures/directory1/file1', '/home/rodrigo/Documents/"
                 "code/python/xcomp/fixtures/directory2/file1']\n"
                 "=input files are redundant\n"
-                )
+            )
             xcomp.main(args)
             self.assertEqual(xcomp_out.getvalue(), result)
 
