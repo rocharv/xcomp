@@ -68,6 +68,7 @@ def read_arguments():
 
 def load_hash_cache(args) -> dict[str, str]:
     hash_cache: dict[str, str] = {}
+    at_least_one_match = False
 
     for file in args.cache_file:
         full_file_path = Path(file)
@@ -78,13 +79,15 @@ def load_hash_cache(args) -> dict[str, str]:
         for line in file_object:
             match = search("([a-f0-9]{16})[ \t]+'?([^'\n]+)'?", line)
             if match:
+                at_least_one_match = True
                 hash_cache[path.abspath(match.group(2))] = match.group(1)
-            else:
-                print(
-                    (f"xcomp: the cache file ({file}) doesn't comply with "
-                     "format requirements")
-                )
-                raise SystemExit(1)
+
+    if not at_least_one_match:
+        print(
+            (f"xcomp: the cache file ({file}) doesn't comply with "
+                "format requirements")
+        )
+        raise SystemExit(1)
 
     return hash_cache
 
